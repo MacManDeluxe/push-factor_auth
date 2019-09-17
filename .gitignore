@@ -1,1 +1,6 @@
 **/.DS_Store
+PushFactorAuth/*.class
+bin/
+gen/
+PushFactorAuth/out/
+PushFactorAuth/.idea/caches
