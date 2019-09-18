@@ -9,8 +9,8 @@ class receiverapp
   public static void main(String[] args) throws IOException
   {
     System.out.println("Receiver App!");
-    String hostName = "";
-    int portNumber;
+    String hostName = "PushAuthApp";
+    int portNumber = 8080;
     //create ServerSocket
     /*Open a socket.
       Open an input stream and output stream to the socket.
@@ -19,7 +19,7 @@ class receiverapp
       Close the socket.*/
     //generate what will be the passed "network string"
     String inputString = "1234approve-5678approve 10 min-4321deny";
-    System.out.println(inputString);
+    System.out.println("Auth request received: " + inputString);
     //parse string, separate into auth strings and option text strings
     String[] codes = inputString.split("-");
     //print strings
