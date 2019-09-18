@@ -1,15 +1,22 @@
+import java.util.Scanner;
+import java.io.*;
+import java.net.*;
+
 //import java.awt.*;
 //import javax.swing.*;
-import java.util.Scanner;
-
-//networking packages - listen on network for auth codes
-//first up: read text file to get "network string"
-//parse text of auth codes: separate "text" from random#
 class receiverapp
 {
-  public static void main(String[] args)
+  public static void main(String[] args) throws IOException
   {
     System.out.println("Receiver App!");
+    String hostName = "";
+    int portNumber;
+    //create ServerSocket
+    /*Open a socket.
+      Open an input stream and output stream to the socket.
+      Read from and write to the stream according to the server's protocol.
+      Close the streams.
+      Close the socket.*/
     //generate what will be the passed "network string"
     String inputString = "1234approve-5678approve 10 min-4321deny";
     System.out.println(inputString);
