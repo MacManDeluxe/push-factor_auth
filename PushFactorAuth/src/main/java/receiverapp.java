@@ -42,6 +42,7 @@ public class receiverapp
       {
         Scanner in = new Scanner(socket.getInputStream());
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        //needs to wait for a confirmation from server that code was received, then close socket
         while (in.hasNextLine())//should only ever BE one line, change to complain if more than 1
         {
           String inputString = in.nextLine();
