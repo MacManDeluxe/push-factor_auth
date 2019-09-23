@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PushFactorAuth.main:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PushFactorAuth_main_jar</output-path>
+    <root id="archive" name="PushFactorAuth.main.jar">
+      <element id="module-output" name="PushFactorAuth.main" />
+    </root>
+  </artifact>
+</component>
