@@ -16,9 +16,9 @@ class DataSource
 
     const USERNAME = 'root';
 
-    const PASSWORD = '';
+    const PASSWORD = 'root';
 
-    const DATABASENAME = 'phpsamples';
+    const DATABASENAME = 'users';
 
     private $conn;
 
@@ -46,11 +46,11 @@ class DataSource
     public function getConnection()
     {
         $conn = new \mysqli(self::HOST, self::USERNAME, self::PASSWORD, self::DATABASENAME);
-        
+
         if (mysqli_connect_errno()) {
             trigger_error("Problem with connecting to database.");
         }
-        
+
         $conn->set_charset("utf8");
         return $conn;
     }
@@ -65,25 +65,25 @@ class DataSource
     public function select($query, $paramType="", $paramArray=array())
     {
         $stmt = $this->conn->prepare($query);
-        
+
         if(!empty($paramType) && !empty($paramArray)) {
             $this->bindQueryParams($stmt, $paramType, $paramArray);
         }
-        
+
         $stmt->execute();
         $result = $stmt->get_result();
-        
+
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $resultset[] = $row;
             }
         }
-        
+
         if (! empty($resultset)) {
             return $resultset;
         }
     }
-    
+
     /**
      * To insert
      * @param string $query
@@ -100,7 +100,7 @@ class DataSource
         $insertId = $stmt->insert_id;
         return $insertId;
     }
-    
+
     /**
      * To execute query
      * @param string $query
@@ -110,13 +110,13 @@ class DataSource
     public function execute($query, $paramType="", $paramArray=array())
     {
         $stmt = $this->conn->prepare($query);
-        
+
         if(!empty($paramType) && !empty($paramArray)) {
             $this->bindQueryParams($stmt, $paramType="", $paramArray=array());
         }
         $stmt->execute();
     }
-    
+
     /**
      * 1. Prepares parameter binding
      * 2. Bind prameters to the sql statement
@@ -135,7 +135,7 @@ class DataSource
             'bind_param'
         ), $paramValueReference);
     }
-    
+
     /**
      * To get database results
      * @param string $query
@@ -146,11 +146,11 @@ class DataSource
     public function numRows($query, $paramType="", $paramArray=array())
     {
         $stmt = $this->conn->prepare($query);
-        
+
         if(!empty($paramType) && !empty($paramArray)) {
             $this->bindQueryParams($stmt, $paramType, $paramArray);
         }
-        
+
         $stmt->execute();
         $stmt->store_result();
         $recordCount = $stmt->num_rows;
