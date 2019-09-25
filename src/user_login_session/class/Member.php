@@ -12,6 +12,7 @@ class Member
 
     function __construct()
     {
+        echo "Member __construct";
         require_once "DataSource.php";
         $this->ds = new DataSource();
     }
@@ -22,11 +23,12 @@ class Member
         $paramType = "i";
         $paramArray = array($memberId);
         $memberResult = $this->ds->select($query, $paramType, $paramArray);
-        
+
         return $memberResult;
     }
-    
+
     public function processLogin($username, $password) {
+        echo "processLogin";
         $passwordHash = md5($password);
         $query = "select * FROM registered_users WHERE user_name = ? AND password = ?";
         $paramType = "ss";

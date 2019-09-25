@@ -15,7 +15,7 @@ CREATE TABLE `registered_users` (
 --
 
 INSERT INTO `registered_users` (`id`, `user_name`, `display_name`, `password`, `email`) VALUES
-(1, 'kate_91', 'Kate Winslet', 'ad5611358209efdc202d35127a160748', 'kate@wince.com');
+(1, 'real_user', 'Real User', 'ad5611358209efdc202d35127a160748', 'real_user@email.com');
 
 --
 -- Indexes for table `registered_users`
