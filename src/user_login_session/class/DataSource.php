@@ -32,7 +32,7 @@ class DataSource
      *
      * Keeping things simple and that works!
      */
-    function __construct()
+    public function __construct()
     {
         $this->conn = $this->getConnection();
     }
@@ -157,3 +157,4 @@ class DataSource
         return $recordCount;
     }
 }
+?>

@@ -10,9 +10,10 @@ class Member
 
     private $ds;
 
-    function __construct()
+    public function __construct()
     {
-        echo "Member __construct";
+        print_r("Member _construct");
+        console_log("Constructor");
         require_once "DataSource.php";
         $this->ds = new DataSource();
     }
@@ -39,4 +40,11 @@ class Member
             return true;
         }
     }
-}
+    function console_log($output, $with_script_tags = true) {
+      $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . ');';
+      if ($with_script_tags) {
+          $js_code = '<script>' . $js_code . '</script>';
+        }
+      echo $js_code;
+    }
+}?>
