@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-nc localhost 8080
+echo "1234approve-5678approve 10 min-4321deny" | nc localhost 8080
