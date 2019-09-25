@@ -14,10 +14,11 @@ if (isset($_POST["login"])) {
     $password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
     echo $username;
     echo $password;
-    require_once (__DIR__ . "./class/Member.php");
+    echo __DIR__ . "/class/Member.php";
+    require_once (__DIR__ . "/class/Member.php");
     echo "require";
     $member = new Member();
-    echo "$member";
+    echo "member created";
     $isLoggedIn = $member->processLogin($username, $password);
     if (! $isLoggedIn) {
         $_SESSION["errorMessage"] = "Invalid Credentials";

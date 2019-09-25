@@ -13,8 +13,8 @@ class Member
     public function __construct()
     {
         print_r("Member _construct");
-        console_log("Constructor");
         require_once "DataSource.php";
+        echo "requireonce";
         $this->ds = new DataSource();
     }
 

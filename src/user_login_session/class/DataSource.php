@@ -34,7 +34,9 @@ class DataSource
      */
     public function __construct()
     {
+        echo "DataSource construct";
         $this->conn = $this->getConnection();
+        echo "  DataSource constructed";
     }
 
     /**
