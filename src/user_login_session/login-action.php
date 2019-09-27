@@ -3,7 +3,6 @@ namespace Phppot;
 
 use \Phppot\Member;
 
-print_r("anything");
 if (isset($_POST["login"])) {
 
     session_start();
@@ -16,11 +15,12 @@ if (isset($_POST["login"])) {
     $member = new Member();
 
     $isLoggedIn = $member->processLogin($username, $password);
+
     if (! $isLoggedIn) {
         $_SESSION["errorMessage"] = "Invalid Credentials";
         echo "$_SESSION[errorMessage]";
     }
-    if($isLoggedIn) {
+    if ($isLoggedIn) {
       $_SESSION["errorMessage"] = "Valid Credentials";
       echo "$_SESSION[errorMessage]";
     }
