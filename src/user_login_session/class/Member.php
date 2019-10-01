@@ -68,12 +68,13 @@ class Member
 
       $value = socket_write($socket, $pushString, strlen($pushString));
       echo $value;
-
+      //wait for response code from receiverapp
       $pushFactorResponseCode = socket_read($socket, strlen($approveCode));
       socket_close($socket);
 
       if ($pushFactorResponseCode == $approveCode) {
         $_SESSION["userId"] = $memberResult[0]["id"];
+        $_SESSION['loggedin_time'] = time();
         return true;
       }
       elseif ($pushFactorResponseCode == $approve10minCode) {
