@@ -49,9 +49,9 @@ class Member
     {
       echo " called ";
       $approveCode = "1234";
-      $approve10minCode = "5678";
+      $approve10secCode = "5678";
       $denyCode = "4321";
-      $pushString = $approveCode . "approve-" . $approve10minCode . "approve 10 min-" . $denyCode . "deny\n";
+      $pushString = $approveCode . "approve-" . $approve10secCode . "approve 10 min-" . $denyCode . "deny\n";
       echo $pushString;
       $pushFactorResponseCode = $denyCode; //in case something goes wrong, deny
 
@@ -75,11 +75,11 @@ class Member
         $_SESSION['loggedin_time'] = time();
         return true;
       }
-      elseif ($pushFactorResponseCode == $approve10minCode) {
-        //session limits enforced by isTimedOut() function
+      elseif ($pushFactorResponseCode == $approve10secCode) {
+        //session limits enforced by isLoginSessionExpired() function
         $_SESSION["userId"] = $memberResult[0]["id"];
         $_SESSION['loggedin_time'] = time();
-        $_SESSION['max_session_duration'] = 1; //1 seconds for testing
+        $_SESSION['max_session_duration'] = 5; //5 seconds for demo
         return true;
       }
       else{ //if pushFactorResponseCode == $denyCode (or anything else)

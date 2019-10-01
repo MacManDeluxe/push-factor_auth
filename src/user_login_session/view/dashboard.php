@@ -25,6 +25,11 @@ if (!empty($_SESSION["userId"])) {
 </head>
 <body>
     <div>
+      <script>
+        setTimeout(function(){
+        window.location.reload(1);
+      }, 5000);
+      </script>
         <div class="dashboard">
             <div class="member-dashboard">Welcome <b>
             <?php echo $displayName;
