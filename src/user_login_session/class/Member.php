@@ -34,11 +34,11 @@ class Member
         $query = "select * FROM registered_users WHERE user_name = ? AND password = ?";
         $paramType = "ss";
         $paramArray = array($username, $passwordHash);
+        //check username and password against MySQL database
         $memberResult = $this->ds->select($query, $paramType, $paramArray);
         if(!empty($memberResult)) //if password correct
         {
             echo " execTwoFactorPush";
-            //$pushFactorResponseCode = shell_exec('./auth2factor.sh');
             $authenticated = $this->execTwoFactorPush($memberResult);
             //$_SESSION["userId"] = $memberResult[0]["id"];
             return $authenticated;
@@ -60,9 +60,6 @@ class Member
           die('The sockets extension is not loaded.');
       }
       $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-      //socket_bind($socket, 'localhost');
-      //socket_listen($socket);
-      //socket_accept($socket);
 
       socket_connect($socket, 'localhost', 8080);
 
@@ -72,24 +69,19 @@ class Member
       $pushFactorResponseCode = socket_read($socket, strlen($approveCode));
       socket_close($socket);
 
+      //set session login cookie based on approval code received
       if ($pushFactorResponseCode == $approveCode) {
         $_SESSION["userId"] = $memberResult[0]["id"];
         $_SESSION['loggedin_time'] = time();
         return true;
       }
       elseif ($pushFactorResponseCode == $approve10minCode) {
-        //following does not work, session limits must be enforced by new function
-        //10 minutes = 600 seconds
-        //destroys current session cookie so new time-limit can be set
-        session_unset();
-        session_destroy();
-        session_set_cookie_params(3,"/");
-        session_start();
-        //session_start(['cookie_lifetime' => 3,]); //10 seconds for testing
+        //session limits enforced by isTimedOut() function
         $_SESSION["userId"] = $memberResult[0]["id"];
+        $_SESSION['loggedin_time'] = time();
         return true;
       }
-      elseif ($pushFactorResponseCode == $denyCode) {
+      else{ //if pushFactorResponseCode == $denyCode (or anything else)
         return false;
       }
     }
