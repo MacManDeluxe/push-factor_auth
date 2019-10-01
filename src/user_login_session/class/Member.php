@@ -55,13 +55,6 @@ class Member
       echo $pushString;
       $pushFactorResponseCode = $denyCode; //in case something goes wrong, deny
 
-      //connect to receiverapp using http_post_data ( string $url , string $data)
-      //$pushFactorResponseCode = http_post_data("http://localhost:8080", $pushString);
-
-      //connect to receiverapp using file_get
-      //$pushFactorResponseCode = file_get_contents("http://localhost:8080" . $pushString);
-
-      //connect to receiverapp using sockets
       //check if sockets extension is loaded
       if (!extension_loaded('sockets')) {
           die('The sockets extension is not loaded.');
@@ -70,29 +63,21 @@ class Member
       //socket_bind($socket, 'localhost');
       //socket_listen($socket);
       //socket_accept($socket);
-      //socket_set_block($socket);  //forces script to wait for connections to finish
 
       socket_connect($socket, 'localhost', 8080);
 
       $value = socket_write($socket, $pushString, strlen($pushString));
       echo $value;
-      //die($value);
-      //socket_sendto($socket, $pushString, strlen($pushString), 0, 'localhost', 8080);
-      //socket_listen($socket);
-      /*do {
-        $buffer = socket_read($socket, strlen("1234"));
-        $pushFactorResponseCode .= $buffer;
-      } while (!empty($buffer));*/
-      //socket_recv($socket, $pushFactorResponseCode, 2048, MSG_WAITALL);
+
       $pushFactorResponseCode = socket_read($socket, strlen($approveCode));
       socket_close($socket);
-      //$pushFactorResponseCode = shell_exec('./auth2factor.sh');
 
       if ($pushFactorResponseCode == $approveCode) {
         $_SESSION["userId"] = $memberResult[0]["id"];
         return true;
       }
       elseif ($pushFactorResponseCode == $approve10minCode) {
+        //following does not work, session limits must be enforced by new function
         //10 minutes = 600 seconds
         //destroys current session cookie so new time-limit can be set
         session_unset();
