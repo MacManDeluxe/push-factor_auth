@@ -79,6 +79,7 @@ class Member
         //session limits enforced by isTimedOut() function
         $_SESSION["userId"] = $memberResult[0]["id"];
         $_SESSION['loggedin_time'] = time();
+        $_SESSION['max_session_duration'] = 1; //1 seconds for testing
         return true;
       }
       else{ //if pushFactorResponseCode == $denyCode (or anything else)
