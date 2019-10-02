@@ -5,15 +5,12 @@ use \Phppot\DataSource;
 
 class Member
 {
-
     private $dbConn;
-
     private $ds;
 
     public function __construct()
     {
         require_once "DataSource.php";
-
         $this->ds = new DataSource();
     }
 
@@ -38,33 +35,35 @@ class Member
         $memberResult = $this->ds->select($query, $paramType, $paramArray);
         if(!empty($memberResult)) //if password correct
         {
-            echo " execTwoFactorPush";
+            //echo " execTwoFactorPush";
             $authenticated = $this->execTwoFactorPush($memberResult);
-            //$_SESSION["userId"] = $memberResult[0]["id"];
             return $authenticated;
         }
     }
 
     private function execTwoFactorPush($memberResult)
     {
-      echo " called ";
-      $approveCode = "1234";
-      $approve10secCode = "5678";
-      $denyCode = "4321";
+      //echo " called ";
+      //$approveCode = "1234";
+      $approveCode = random_int(1000,9999);
+      $usedCodes = array($approveCode);
+      //$approve10secCode = "5678";
+      $approve10secCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
+      $usedCodes = array($approveCode, $approve10secCode);
+      //$denyCode = "4321";
+      $denyCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
+
       $pushString = $approveCode . "approve-" . $approve10secCode . "approve 10 min-" . $denyCode . "deny\n";
-      echo $pushString;
+      //echo $pushString;
       $pushFactorResponseCode = $denyCode; //in case something goes wrong, deny
 
-      //check if sockets extension is loaded
       if (!extension_loaded('sockets')) {
           die('The sockets extension is not loaded.');
       }
       $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-
       socket_connect($socket, 'localhost', 8080);
-
       $value = socket_write($socket, $pushString, strlen($pushString));
-      echo $value;
+      //echo $value;
       //wait for response code from receiverapp
       $pushFactorResponseCode = socket_read($socket, strlen($approveCode));
       socket_close($socket);
@@ -85,6 +84,23 @@ class Member
       else{ //if pushFactorResponseCode == $denyCode (or anything else)
         return false;
       }
+    }
+
+      /*
+      * @param int   $from     From number
+      * @param int   $to       To number
+      * @param array $excluded Additionally exclude numbers
+      * @return int
+      */
+    private function randomNumberExcluding($from, $to, array $excluded = [])
+    {
+      $func = function_exists('random_int') ? 'random_int' : 'mt_rand';
+
+      do {
+        $number = $func($from, $to);
+      } while (in_array($number, $excluded, true));
+
+      return $number;
     }
 
 }?>
