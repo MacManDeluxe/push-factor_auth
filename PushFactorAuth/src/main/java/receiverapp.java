@@ -36,7 +36,7 @@ public class receiverapp
     @Override
     public void run()
     {
-      System.out.println("Login request from a real site!");
+      //System.out.println("Login request from a real site!");
       System.out.println("Connected " + socket);
       try
       {
@@ -47,7 +47,7 @@ public class receiverapp
         {
           String inputString = in.nextLine();
           //String inputString = "1234approve-5678approve 10 min-4321deny";
-          System.out.println("Auth request received: " + inputString);
+          System.out.println("Auth codes received: " + inputString);
           //parse string, separate into auth strings and option text strings
           String[] codes = inputString.split("-");
           System.out.println("Select One:");

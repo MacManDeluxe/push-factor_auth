@@ -62,8 +62,7 @@ class Member
       }
       $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
       socket_connect($socket, 'localhost', 8080);
-      $value = socket_write($socket, $pushString, strlen($pushString));
-      //echo $value;
+      socket_write($socket, $pushString, strlen($pushString));
       //wait for response code from receiverapp
       $pushFactorResponseCode = socket_read($socket, strlen($approveCode));
       socket_close($socket);
