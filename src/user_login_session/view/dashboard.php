@@ -2,7 +2,6 @@
 namespace Phppot;
 
 use \Phppot\Member;
-//include("../session-expired.php");
 
 if (!empty($_SESSION["userId"])) {
     require_once (__DIR__ . '/../class/Member.php');
@@ -13,10 +12,7 @@ if (!empty($_SESSION["userId"])) {
     } else {
         $displayName = $memberResult[0]["user_name"];
     }
-} //else return to index.php?
-/*else {
-  require_once '../logout.php';
-}*/
+}
 ?>
 <html>
 <head>
@@ -25,11 +21,11 @@ if (!empty($_SESSION["userId"])) {
 </head>
 <body>
     <div>
-      <script>
+      <!--<script>
         setTimeout(function(){
         window.location.reload(1);
       }, 5000);
-      </script>
+    </script>-->
         <div class="dashboard">
             <div class="member-dashboard">Welcome <b>
             <?php echo $displayName;
@@ -48,3 +44,18 @@ if (!empty($_SESSION["userId"])) {
     </div>
 </body>
 </html>
+<?php
+//sends cancel code, listens for cancel code
+$cancelCode = random_int(1000,9999);
+$pushString = $cancelCode . "Cancel\n";
+
+$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+socket_connect($socket, 'localhost', 8080);
+socket_write($socket, $pushString, strlen($pushString));
+//wait for response code from receiverapp
+$pushFactorResponseCode = socket_read($socket, strlen($cancelCode));
+socket_close($socket);
+if($pushFactorResponseCode == $cancelCode) {
+  require_once './logout.php';
+}
+ ?>

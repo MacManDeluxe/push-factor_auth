@@ -43,14 +43,12 @@ class Member
 
     private function execTwoFactorPush($memberResult)
     {
-      //echo " called ";
-      //$approveCode = "1234";
       $approveCode = random_int(1000,9999);
       $usedCodes = array($approveCode);
-      //$approve10secCode = "5678";
+
       $approve10secCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
       $usedCodes = array($approveCode, $approve10secCode);
-      //$denyCode = "4321";
+
       $denyCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
 
       $pushString = $approveCode . "approve-" . $approve10secCode . "approve 10 min-" . $denyCode . "deny\n";
