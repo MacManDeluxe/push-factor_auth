@@ -13,10 +13,7 @@ if (!empty($_SESSION["userId"])) {
     } else {
         $displayName = $memberResult[0]["user_name"];
     }
-} //else return to index.php?
-/*else {
-  require_once '../logout.php';
-}*/
+}
 ?>
 <html>
 <head>
