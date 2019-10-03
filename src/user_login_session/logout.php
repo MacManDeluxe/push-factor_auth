@@ -5,6 +5,7 @@ if(isset($_GET["action"])) {
   $file = session_save_path()."/sess_".$_GET["action"];
   unlink($file);
 }
+//$logoutID = $_POST["action"]
 session_start();
 session_unset();
 session_destroy();
