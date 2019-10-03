@@ -44,19 +44,25 @@ class Member
     private function execTwoFactorPush($memberResult)
     {
       //echo " called ";
-      //$approveCode = "1234";
       $approveCode = random_int(1000,9999);
       $usedCodes = array($approveCode);
-      //$approve10secCode = "5678";
-      $approve10secCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
-      $usedCodes = array($approveCode, $approve10secCode);
-      //$denyCode = "4321";
-      $denyCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
 
-      $pushString = $approveCode . "approve-" . $approve10secCode . "approve 10 min-" . $denyCode . "deny\n";
+      $approve10secCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
+      $usedCodes[1] = $approve10secCode;
+
+      $denyCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
+      $usedCodes[2] = $denyCode;
+
+      $cancelCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
+
+      $pushString = $approveCode."Approve-".
+                    $approve10secCode."Approve 10 Seconds-".
+                    $denyCode."Deny-".
+                    $cancelCode."Cancel Login-".session_id()."\n";
       //echo $pushString;
       $pushFactorResponseCode = $denyCode; //in case something goes wrong, deny
 
+      //connect to receiverapp, send auth codes
       if (!extension_loaded('sockets')) {
           die('The sockets extension is not loaded.');
       }
@@ -67,7 +73,7 @@ class Member
       $pushFactorResponseCode = socket_read($socket, strlen($approveCode));
       socket_close($socket);
 
-      //set session login cookie based on approval code received
+      //set session login session based on approval code received
       if ($pushFactorResponseCode == $approveCode) {
         $_SESSION["userId"] = $memberResult[0]["id"];
         $_SESSION['loggedin_time'] = time();
