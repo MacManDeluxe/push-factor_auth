@@ -32,7 +32,8 @@ if (!empty($_SESSION["userId"])) {
             <?php echo $displayName;
              ?>
             </b>, You have successfully logged in!<br>
-            <?php $timeSinceLogin = time() - $_SESSION['loggedin_time'];
+            <?php echo 'Session ID: '.session_id(); ?><br><?php
+            $timeSinceLogin = time() - $_SESSION['loggedin_time'];
             echo 'Time since login: '.(string)$timeSinceLogin; ?><br><?php
             echo 'Max duration: '.(string)$_SESSION['max_session_duration']; ?><br><?php
             echo 'Login Session Expired = ';
