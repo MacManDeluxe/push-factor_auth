@@ -91,12 +91,12 @@ public class receiverapp
       if(showCancel)
       {
         //request input to activate "Cancel Login"
-        System.out.println("1. Cancel Login");
+        System.out.println("Cancel Login: y?");
         Scanner responseReq = new Scanner(System.in);
-        int response = responseReq.nextInt();
-        String r = Integer.toString(response);
-        if(r.equals("1")) {
-          //System.out.println("response = 1");
+        char response = responseReq.next().charAt(0);
+        //String r = Integer.toString(response);
+        if(response == 'y') {
+          //System.out.println("response = " + response);
           try {
             String url = "http://localhost:8888/logout.php?action=" + session_id;
             //System.out.println(url);
