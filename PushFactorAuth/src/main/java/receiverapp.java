@@ -102,7 +102,7 @@ public class receiverapp
             //System.out.println(url);
             URL urlObj = new URL(url);
             URLConnection urlCon = urlObj.openConnection();
-            InputStream inputStream = urlCon.getInputStream();
+            InputStream inputStream = urlCon.getInputStream(); //makes the url request
             System.out.println("Session terminated.");
           } catch (MalformedURLException e) {
             System.out.println("The specified URL is malformed: " + e.getMessage());
