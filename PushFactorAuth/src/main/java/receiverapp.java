@@ -60,11 +60,14 @@ public class receiverapp
            - no fewer than 4 codes (approve,deny,cancel,session_id)
            - first code must be Approve, last 3 must be Deny, Cancel Login, session_id
           */
+          System.out.println("###################################");
           System.out.println("Select One:");
           for (int i = 0; i < codes.length-2; i++) { //last 2 codes are Cancel and session_id
             String codeOut = codes[i].substring(codeLength); //cuts out response code
+
             System.out.println((i + 1) + ". " + codeOut);
           }
+          System.out.println("###################################");
           //request input for which option to select
           Scanner responseReq = new Scanner(System.in);
           int response = responseReq.nextInt();
@@ -94,7 +97,9 @@ public class receiverapp
       if(showCancel)
       {
         //request input to activate "Cancel Login"
+        System.out.println("###################################");
         System.out.println("Cancel Login: y or n?");
+        System.out.println("###################################");
         Scanner responseReq = new Scanner(System.in);
         char response = responseReq.next().charAt(0);
         if(response == 'y') {
@@ -108,7 +113,7 @@ public class receiverapp
           }
           System.out.println("Session Terminated");
         }
-        System.out.println("Waiting for new login request.");
+        System.out.println("Waiting for new login request...");
       }
     }
 
