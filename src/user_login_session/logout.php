@@ -1,8 +1,7 @@
 <?php
-if(isset($_GET["action"])) {
-  echo $_GET["action"];
-  //$file = session_save_path()."sess_".session_id();
-  $file = session_save_path()."/sess_".$_GET["action"];
+if(isset($_POST["action"])) {
+  //echo $_POST["action"];
+  $file = session_save_path()."/sess_".$_POST["action"];
   unlink($file);
 }
 //$logoutID = $_POST["action"]

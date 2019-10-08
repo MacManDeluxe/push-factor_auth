@@ -1,8 +1,7 @@
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -100,21 +99,39 @@ public class receiverapp
         char response = responseReq.next().charAt(0);
         if(response == 'y') {
           //System.out.println("response = " + response);
+          String url = "http://localhost:8888/logout.php";
+          String urlParameters = "action=" + session_id;
           try {
-            String url = "http://localhost:8888/logout.php?action=" + session_id;
-            //System.out.println(url);
-            System.out.println(cancelCode);
-            URL urlObj = new URL(url);
-            URLConnection urlCon = urlObj.openConnection();
-            InputStream inputStream = urlCon.getInputStream(); //makes the url request
-            System.out.println("Session terminated.");
-          } catch (MalformedURLException e) {
-            System.out.println("The specified URL is malformed: " + e.getMessage());
+            httpPost(url, urlParameters);
           } catch (IOException e) {
-            System.out.println("An I/O error occurs: " + e.getMessage());
+            e.printStackTrace();
           }
         }
         System.out.println("Waiting for new login request.");
+      }
+    }
+
+    private void httpPost(String url, String urlParameters) throws IOException
+    {
+      HttpURLConnection con = null;
+      byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+
+      try {
+        URL myurl = new URL(url);
+        con = (HttpURLConnection) myurl.openConnection();
+
+        con.setDoOutput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty("User-Agent", "Java client");
+        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+        try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+          wr.write(postData);
+        }
+      } finally {
+        if(con!=null) {
+          con.disconnect();
+        }
       }
     }
   }
