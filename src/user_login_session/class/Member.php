@@ -44,6 +44,7 @@ class Member
     private function execTwoFactorPush($memberResult)
     {
       //echo " called ";
+      //
       $approveCode = random_int(1000,9999);
       $usedCodes = array($approveCode);
 
@@ -56,7 +57,7 @@ class Member
       $cancelCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
 
       $pushString = $approveCode."Approve-".
-                    $approve10secCode."Approve 10 Seconds-".
+                    $approve10secCode."Approve 10 Minutes-".
                     $denyCode."Deny-".
                     $cancelCode."Cancel Login-".session_id()."\n";
       //echo $pushString;
