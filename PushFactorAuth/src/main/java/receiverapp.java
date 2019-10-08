@@ -106,6 +106,7 @@ public class receiverapp
           } catch (IOException e) {
             e.printStackTrace();
           }
+          System.out.println("Session Terminated");
         }
         System.out.println("Waiting for new login request.");
       }
@@ -127,6 +128,19 @@ public class receiverapp
 
         try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
           wr.write(postData);
+          String postDataString = new String(postData);
+          System.out.println(postDataString);
+        }
+        //read url response to ensure proper write
+        StringBuilder content;
+        try (BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()))) {
+          String line;
+          content = new StringBuilder();
+          while ((line = in.readLine()) != null) {
+            content.append(line);
+            content.append(System.lineSeparator());
+          }
         }
       } finally {
         if(con!=null) {
