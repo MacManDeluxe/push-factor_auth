@@ -53,6 +53,8 @@ class Member
       $usedCodes[2] = $denyCode;
 
       $cancelCode = $this->randomNumberExcluding(1000,9999,$usedCodes);
+      //saved to session file so logout.php can verify Cancel POST request
+      $_SESSION["cancelCode"] = $cancelCode;
 
       $pushString = $approveCode."Approve-".
                     $approve10secCode."Approve 10 Minutes-".
