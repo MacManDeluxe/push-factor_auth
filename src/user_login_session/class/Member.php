@@ -43,8 +43,6 @@ class Member
 
     private function execTwoFactorPush($memberResult)
     {
-      //echo " called ";
-      //
       $approveCode = random_int(1000,9999);
       $usedCodes = array($approveCode);
 
@@ -60,7 +58,6 @@ class Member
                     $approve10secCode."Approve 10 Minutes-".
                     $denyCode."Deny-".
                     $cancelCode."Cancel Login-".session_id()."\n";
-      //echo $pushString;
       $pushFactorResponseCode = $denyCode; //in case something goes wrong, deny
 
       //connect to receiverapp, send auth codes
