@@ -25,5 +25,11 @@ java receiverapp
 For testing purposes, once the receiverapp is running, the actions of the website can be simulated using the following bash script on MacOS:
 /push-factor_auth/src/auth2factor.sh
 
-To run the website and associated MySQL user database on localhost in MacOS, I recommend downloading MAMP and setting the Web Server Document Root to .../push-factor_auth/src/user_login_session in MAMP Preferences. The sql schema is contained in /push-factor_auth/src/user_login_session/sql/schema.sql
+To run the website and associated MySQL user database on localhost in MacOS, I recommend downloading MAMP and setting the Web Server Document Root to .../push-factor_auth/src/user_login_session in MAMP Preferences. Set the apache port to 8888, and the MySQL port to 8889. The sql schema is contained in /push-factor_auth/src/user_login_session/sql/schema.sql
 You will have to replace the user password field with an md5 hash of the password of your choice. While not secure (the PHP fuctions password_hash() and password_verify() are recommended), this was a usability tradeoff to make a code reviewer's life easier until an account 2fa setup process is implemented.
+
+Once everything is set up:
+1. Run the java receiverapp from the terminal
+2. In MAMP, start the apache and MySQL servers
+3. Direct a browser to http://localhost:8888/index.php
+4. Attempt login using the password you hashed into the database
