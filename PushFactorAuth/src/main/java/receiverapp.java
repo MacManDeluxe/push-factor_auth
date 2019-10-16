@@ -36,7 +36,7 @@ public class receiverapp {
       String cancelCode = ""; //needed to store "Cancel" code after socket is closed (to authorize deletion of session file)
       String session_id = ""; //needed to identify which session file should be deleted from server
       boolean showCancel = false; //Cancel option only appears when a session is authenticated
-      //System.out.println("Login request from a real site!");
+
       System.out.println("Connected " + socket);
       try {
         Scanner in = new Scanner(socket.getInputStream());
@@ -99,8 +99,8 @@ public class receiverapp {
           }
           System.out.println("Session Terminated");
         }
-        System.out.println("Waiting for new login request...");
       }
+      System.out.println("Waiting for new login request...");
     }
 
     private void httpPost(String url, String urlParameters) throws IOException {
